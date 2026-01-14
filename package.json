@@ -1,0 +1,82 @@
+{
+  "name": "@noteske/backend-flow",
+  "version": "0.1.0",
+  "description": "Opinionated backend flow kit for Node.js (errors, responses, validation, tracing, logging).",
+  "author": "Eske",
+  "license": "MIT",
+  "type": "module",
+
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eske/backend-flow"
+  },
+  "bugs": {
+    "url": "https://github.com/eske/backend-flow/issues"
+  },
+  "homepage": "https://github.com/eske/backend-flow#readme",
+
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+
+  "files": ["dist"],
+  "sideEffects": false,
+
+  "engines": {
+    "node": ">=18"
+  },
+
+  "publishConfig": {
+    "access": "public"
+  },
+
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint .",
+    "prepublishOnly": "npm run build"
+  },
+
+  "keywords": [
+    "backend",
+    "express",
+    "middleware",
+    "errors",
+    "validation",
+    "zod",
+    "logging",
+    "pino",
+    "tracing"
+  ],
+
+  "peerDependencies": {
+    "express": "^4.18.0 || ^5.0.0"
+  },
+
+  "peerDependenciesMeta": {
+    "express": {
+      "optional": true
+    }
+  },
+
+  "dependencies": {
+    "pino": "^10.1.1",
+    "zod": "^4.3.5"
+  },
+
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.0.8",
+    "express": "^5.2.1",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  }
+}

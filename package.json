@@ -8,12 +8,12 @@
 
   "repository": {
     "type": "git",
-    "url": "https://github.com/eske/backend-flow"
+    "url": "https://github.com/okithaeske/backend-flow"
   },
   "bugs": {
-    "url": "https://github.com/eske/backend-flow/issues"
+    "url": "https://github.com/okithaeske/backend-flow/issues"
   },
-  "homepage": "https://github.com/eske/backend-flow#readme",
+  "homepage": "https://github.com/okithaeske/backend-flow#readme",
 
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

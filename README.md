@@ -1,4 +1,4 @@
-# @eske/backend-flow
+# @noteske/backend-flow
 
 An opinionated backend toolkit for Node.js/Express applications. Provides standardized patterns for error handling, API responses, request validation, request tracing, and logging.
 
@@ -16,7 +16,7 @@ This package provides battle-tested solutions for all of these, so you can focus
 ## Installation
 
 ```bash
-npm install @eske/backend-flow
+npm install @noteske/backend-flow
 ```
 
 ## Quick Start
@@ -42,7 +42,7 @@ import {
   created,
   // Logger
   createLogger,
-} from "@eske/backend-flow";
+} from "@noteske/backend-flow";
 
 const app = express();
 const logger = createLogger({ name: "my-api" });
@@ -94,7 +94,7 @@ app.listen(3000, () => {
 Create consistent, secure errors with one line:
 
 ```typescript
-import { badRequest, unauthorized, forbidden, notFound, conflict, tooManyRequests, internalError } from "@eske/backend-flow";
+import { badRequest, unauthorized, forbidden, notFound, conflict, tooManyRequests, internalError } from "@noteske/backend-flow";
 
 // 400 Bad Request
 throw badRequest("Invalid email format");
@@ -128,7 +128,7 @@ throw badRequest("Validation failed", { field: "email", issue: "invalid format" 
 For more control, create AppError instances directly:
 
 ```typescript
-import { AppError } from "@eske/backend-flow";
+import { AppError } from "@noteske/backend-flow";
 
 throw new AppError({
   status: 402,
@@ -144,7 +144,7 @@ throw new AppError({
 All responses follow a consistent format:
 
 ```typescript
-import { ok, created, noContent, fail } from "@eske/backend-flow";
+import { ok, created, noContent, fail } from "@noteske/backend-flow";
 
 // Success response
 res.json(ok({ id: 1, name: "John" }));
@@ -171,7 +171,7 @@ Validate request bodies with Zod schemas:
 
 ```typescript
 import { z } from "zod";
-import { validateBody } from "@eske/backend-flow";
+import { validateBody } from "@noteske/backend-flow";
 
 const LoginSchema = z.object({
   email: z.string().email(),
@@ -207,7 +207,7 @@ Validation error response:
 Track requests through your system for debugging:
 
 ```typescript
-import { traceId } from "@eske/backend-flow";
+import { traceId } from "@noteske/backend-flow";
 
 app.use(traceId());
 
@@ -226,7 +226,7 @@ curl -H "x-request-id: my-trace-123" http://localhost:3000/api/users
 Log every request with timing information:
 
 ```typescript
-import { createLogger, requestLogger } from "@eske/backend-flow";
+import { createLogger, requestLogger } from "@noteske/backend-flow";
 
 const logger = createLogger({ name: "my-api" });
 app.use(requestLogger(logger));
@@ -252,7 +252,7 @@ Log output:
 Wrap async routes to catch errors automatically:
 
 ```typescript
-import { asyncHandler } from "@eske/backend-flow";
+import { asyncHandler } from "@noteske/backend-flow";
 
 // Without asyncHandler (dangerous!)
 app.get("/users", async (req, res) => {
@@ -272,7 +272,7 @@ app.get("/users", asyncHandler(async (req, res) => {
 Create a configured Pino logger:
 
 ```typescript
-import { createLogger } from "@eske/backend-flow";
+import { createLogger } from "@noteske/backend-flow";
 
 // Basic usage
 const logger = createLogger();

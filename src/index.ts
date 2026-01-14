@@ -1,13 +1,14 @@
 /**
- * @eske/backend-flow
+ * @noteske/backend-flow
  *
- * An opinionated backend toolkit for Node.js/Express applications.
+ * An opinionated backend toolkit for Node.js applications.
  * Provides standardized patterns for error handling, responses, validation, tracing, and logging.
+ * Works with both Express and Azure Functions.
  *
  * This is the main entry point - all exports are re-exported from here
  * so you can import everything from a single package:
  *
- * @example
+ * @example Express
  * import {
  *   // Error handling
  *   AppError,
@@ -25,7 +26,7 @@
  *   noContent,
  *   fail,
  *
- *   // Middleware
+ *   // Express Middleware
  *   asyncHandler,
  *   traceId,
  *   validateBody,
@@ -35,7 +36,28 @@
  *
  *   // Logger
  *   createLogger,
- * } from "@eske/backend-flow";
+ * } from "@noteske/backend-flow";
+ *
+ * @example Azure Functions
+ * import {
+ *   // Error handling
+ *   AppError,
+ *   notFound,
+ *   badRequest,
+ *
+ *   // Response helpers
+ *   ok,
+ *   created,
+ *   fail,
+ *
+ *   // Azure Functions utilities
+ *   withHandler,
+ *   validate,
+ *   getTraceId,
+ *
+ *   // Logger
+ *   createLogger,
+ * } from "@noteske/backend-flow";
  */
 
 // ============================================================================
@@ -78,3 +100,11 @@ export * from "./middleware/requestLogger";
 // ============================================================================
 // createLogger: Creates a configured Pino logger instance
 export * from "./logger/logger";
+
+// ============================================================================
+// AZURE FUNCTIONS
+// ============================================================================
+// withHandler: Wraps Azure Function handlers with error handling and tracing
+// validate: Validates data against Zod schemas (throws AppError on failure)
+// getTraceId: Extracts or generates trace ID from Azure Function requests
+export * from "./azure";

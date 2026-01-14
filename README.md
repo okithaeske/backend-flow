@@ -1,6 +1,6 @@
 # @noteske/backend-flow
 
-An opinionated backend toolkit for Node.js/Express applications. Provides standardized patterns for error handling, API responses, request validation, request tracing, and logging.
+An opinionated backend toolkit for Node.js applications. Provides standardized patterns for error handling, API responses, request validation, request tracing, and logging. Works with both **Express** and **Azure Functions**.
 
 ## Why Use This?
 
@@ -370,6 +370,83 @@ app.post("/users", validateBody(UserSchema), (req, res) => {
   const { email, name } = req.body;
 });
 ```
+
+## Azure Functions
+
+This package also supports Azure Functions v4. The same error handling, response formatting, and validation patterns work with Azure's programming model.
+
+### Quick Start (Azure Functions)
+
+```typescript
+import { app } from "@azure/functions";
+import { z } from "zod";
+import {
+  withHandler,
+  validate,
+  ok,
+  created,
+  notFound,
+  createLogger,
+} from "@noteske/backend-flow";
+
+const logger = createLogger({ name: "my-function" });
+
+// Define validation schema
+const CreateUserSchema = z.object({
+  email: z.string().email(),
+  name: z.string(),
+});
+
+// GET user by ID
+app.http("getUser", {
+  methods: ["GET"],
+  route: "users/{id}",
+  handler: withHandler(async (req, context) => {
+    const userId = req.params.id;
+    const user = await findUser(userId);
+
+    if (!user) {
+      throw notFound("User not found");
+    }
+
+    return { status: 200, jsonBody: ok(user) };
+  }, { logger }),
+});
+
+// POST create user
+app.http("createUser", {
+  methods: ["POST"],
+  route: "users",
+  handler: withHandler(async (req, context) => {
+    const body = await req.json();
+    const data = validate(CreateUserSchema, body);
+
+    const user = await createUser(data);
+    return { status: 201, jsonBody: created(user) };
+  }, { logger }),
+});
+```
+
+### Azure Functions Utilities
+
+| Function | Description |
+|----------|-------------|
+| `withHandler(fn, opts?)` | Wraps handler with error handling and tracing |
+| `validate(schema, data)` | Validates data against Zod schema |
+| `getTraceId(req, header?)` | Extracts or generates trace ID |
+
+### What Works in Azure Functions
+
+| Feature | Express | Azure Functions |
+|---------|---------|-----------------|
+| Error factories (`badRequest`, `notFound`, etc.) | ✅ | ✅ |
+| Response helpers (`ok`, `created`, `fail`) | ✅ | ✅ |
+| `AppError` class | ✅ | ✅ |
+| `createLogger()` | ✅ | ✅ |
+| Request validation | `validateBody` middleware | `validate` function |
+| Error handling | `errorHandler` middleware | `withHandler` wrapper |
+| Request tracing | `traceId` middleware | `getTraceId` / `withHandler` |
+| Request logging | `requestLogger` middleware | Manual with logger |
 
 ## License
 

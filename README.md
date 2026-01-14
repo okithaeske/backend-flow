@@ -1,4 +1,4 @@
-# @eske/backend-flow
+# @noteske/backend-flow
 
 An opinionated backend toolkit for Node.js/Express applications. Provides standardized patterns for error handling, API responses, request validation, request tracing, and logging.
 
